@@ -1,7 +1,9 @@
 def compare_elfs(e1, e2):
-	if e1[0] >= e2[0] and e1[1] <= e2[1]:
+	if e1[0] <= e2[0] and e1[1] >= e2[0]:
 		return True
-	elif e1[0] <= e2[0] and e1[1] >= e2[1]:
+	elif e1[0] <= e2[1] and e1[1] >= e2[1]:
+		return True
+	elif e1[0] >= e2[0] and e1[1] <= e2[1]:
 		return True
 	else:
 		return False
@@ -22,6 +24,8 @@ for line in open("data.txt", "r"):
 
 	if compare_elfs(first_elf, second_elf):
 		total_overlap += 1
-
-
-print(total_overlap)
+		print("True!")
+	else:
+		print("False")
+	
+	print(total_overlap)
