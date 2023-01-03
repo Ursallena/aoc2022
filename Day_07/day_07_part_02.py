@@ -65,7 +65,6 @@ class directory:
 directory_list = [directory("/", "~")]
 current_location = directory_list[-1]
 
-
 for line in open("data.txt", "r"):
 	line = line.strip().split(" ")
 	
@@ -87,12 +86,21 @@ for line in open("data.txt", "r"):
 	else:
 		current_location.add_file(files(line[1], line[0]))
 
+total_system_size = 70000000 ## 70 million
+required_space = 30000000 ## 30 million
+used_space = directory_list[0].total_size()
+free_space = total_system_size - used_space
+space_difference = required_space - free_space ## how much we need to free
 
-sum_of_files = 0
+d_to_delete = [] ## potential directories that would free up enough space
+
 for d in directory_list:
-	size = d.total_size()
-	if size < 100000:
-		sum_of_files += size
+	if d.total_size() > space_difference:
+		d_to_delete.append(d)
 
-print(sum_of_files)
+smallest_to_delete = d_to_delete[0].total_size()
+for d in d_to_delete:
+	if d.total_size() < smallest_to_delete:
+		smallest_to_delete = d.total_size()
 
+print(smallest_to_delete)
