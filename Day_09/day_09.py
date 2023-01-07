@@ -24,13 +24,35 @@ def check_tail_pos(head, tail, pos_list):
 	head = head.return_pos()
 	tail = tail.return_pos()
 	if head[0] - 1 > tail[0]:
+		if head[1] > tail[1]:
+			tail[1] += 1
+		elif head[1] < tail[1]:
+			tail[1] -= 1
+
 		tail[0] += 1
+
 	elif head[0] + 1 < tail[0]:
+		if head[1] > tail[1]:
+			tail[1] += 1
+		elif head[1] < tail[1]:
+			tail[1] -= 1
+
 		tail[0] -= 1
 
-	if head[1] - 1 > tail[1]:
+	elif head[1] - 1 > tail[1]:
+		if head[0] < tail[0]:
+			tail[0] -= 1
+		elif head[0] > tail[0]:
+			tail[0] += 1
+
 		tail[1] += 1
-	elif head[1] +1 < tail[1]:
+
+	elif head[1] + 1 < tail[1]:
+		if head[0] < tail[0]:
+			tail[0] -= 1
+		elif head[0] > tail[0]:
+			tail[0] += 1
+
 		tail[1] -= 1
 
 	for pos in pos_list:
@@ -90,15 +112,9 @@ for line in open("data.txt", "r"):
 		tail, pos_list = check_tail_pos(head, tail, pos_list)
 
 
-	print(line)
-	print(head)
-	print(tail)
-
-
 counter = 0
 for pos in pos_list:
 	if pos.return_tail_touch():
 		counter += 1
 
 print(counter)
-print(str(len(pos_list)))
