@@ -1,16 +1,17 @@
-## Starting point = 83
-## Goal = 69
-
 class location():
-	def __init__(self, x, y, height, parents = [], is_end_point = False):
+	def __init__(self, x, y, height, is_end_point = False):
 		self.x = x
 		self.y = y
 		self.height = height
-		self.parents = parents
+		self.parents = []
+		self.children = []
 		self.is_end_point = is_end_point
 
 	def set_parent(self, parents):
 		self.parents = parents
+
+	def set_children(self, children):
+		self.children = children
 
 	def __repr__(self):
 		return "[" + str(self.x) + ", " + str(self.y) + "]"
@@ -20,7 +21,6 @@ class location():
 
 data = []
 location_list = []
-location_mem = [] 
 player_location = False
 max_x = 0
 max_y = 0
@@ -46,13 +46,11 @@ for i in range(0, len(data)):
 		if max_y < i:
 			max_y = int(i)
 
-
-
 for l in range(0, len(location_list)):
 	x = location_list[l].x
 	y = location_list[l].y
 	temp = []
-	parents = []
+	children = []
 
 	if not y == 0:
 		temp.append([y - 1, x])
@@ -68,18 +66,33 @@ for l in range(0, len(location_list)):
 
 	for i in location_list:
 		if [i.y, i.x] in temp and location_list[l].height + 1 >= i.height:
-			parents.append(i)
+			children.append(i)
 
-	location_list[l].set_parent(parents)
+	location_list[l].set_children(children)
+
+bfs_queue = [player_location]
+bfs_visited = [player_location]
+
+while True:
+	if bfs_queue[0].is_end_point:
+		break
+
+	for c in bfs_queue[0].children:
+		if not c in bfs_visited and c.parents == []:
+			c.set_parent(bfs_queue[0])
+			bfs_queue.append(c)
+
+	bfs_queue.pop(0)
+	bfs_visited.append([bfs_queue[0].x, bfs_queue[0].y])
+
+steps = 0
+parent = bfs_queue[0].parents
+while True:
+	if not parent == []:
+		parent = parent.parents
+		steps += 1
+	else:
+		break
 
 
-print(player_location)
-
-
-
-
-
-
-
-
-
+print(steps)
