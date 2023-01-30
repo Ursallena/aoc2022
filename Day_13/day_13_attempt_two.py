@@ -5,43 +5,35 @@
 #ord 0-9 = 48-57
 ord_list = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
-def format_input(line_input):
-	temp = False
+
+def format_input(line_input):	
+	temp = []
 	list_depth = 0
-	list_index = 0
 
 	for c in line_input:
-		print(temp)
 		if c == "[":
-			if temp == False:
-				temp = []
-			elif list_depth >= 2:
-				temp[list_depth - 2].append([])
-			else:
-				temp.append([])
-
+			temp.append([])
+			in_last_list = True
 			list_depth += 1
 
 		elif ord(c) in ord_list:
 			c = int(c)
-			if temp == False:
-				temp = c
-			elif list_depth >= 2:
-				temp[list_depth - 2].append(c)
-			else:
-				temp.append(c)
+			temp[-1].append(c)
 
-		elif c == "]":
+		elif c == "]" and list_depth >= 2:
+			temp[-2].append(temp[-1])
+			temp.pop()
 			list_depth -= 1
 
 	return temp
 
-
 def compare_sides(left, right):
 	left = format_input(left)
 	right = format_input(right)
-	print(left)
-	print(right)
+	
+	
+
+	
 
 left = False
 right = False
@@ -59,8 +51,10 @@ for line in open("data.txt", "r"):
 	if left and right:
 		if compare_sides(left, right):
 			total_sum += index
+
+		print("Index: " + str(index) + " | Total Sum: " + str(total_sum))
 		index += 1
 		left = False
 		right = False
 
-		print("Index: " + str(index) + " | " + str(total_sum))
+		
