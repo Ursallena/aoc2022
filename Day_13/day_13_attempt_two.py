@@ -5,7 +5,8 @@
 #ord 0-9 = 48-57
 ord_list = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 
-
+# Actually in python there's a really easy way to parse the input...
+# ...perhaps you shoudl EVALuate your options...
 def format_input(line_input):	
 	temp = []
 	list_depth = 0
@@ -17,7 +18,7 @@ def format_input(line_input):
 			list_depth += 1
 
 		elif ord(c) in ord_list:
-			c = int(c)
+			c = int(c) # you know the input can have multi-digit numbers right?
 			temp[-1].append(c)
 
 		elif c == "]" and list_depth >= 2:
