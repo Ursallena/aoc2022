@@ -46,19 +46,24 @@ def compare_lists(left, right):
 	list_type = type([])
 	int_type = type(0)
 	temp = "Null"
+	#print("Comparing: " + str(left) + str(right))
 
 	if left == [] and right == []:
+		#print("List ended, nothing happened")
 		return "Null"
 
 	elif left == [] and not right == []:
+		#print("True because Left ran out of list items")
 		return True
 
 	elif not left == [] and right == []:
+		#print("False because right ran out of list items")
 		return False
 
 	while not left == [] and not right == []:
 		left_type = type(left[0])
 		right_type = type(right[0])
+		#print(left, right, left_type, left[0], right_type, right[0])
 
 		if left_type == list_type and right_type == list_type:
 			temp = compare_lists(left[0], right[0])
@@ -71,29 +76,30 @@ def compare_lists(left, right):
 
 		else: #Should only get to this point if both are ints
 			if left[0] < right[0]:
+				#print("True because left smaller than right!")
 				return True
 
 			elif left[0] > right[0]:
+				#print("False because left larger than right!")
 				return False
 
-			else:
-				return "Null"
+		if temp == "Null":
+			left.pop(0)
+			right.pop(0)
+		else:
+			#print("Returned " + str(temp) + "???")
+			return temp
 
-
-		if not temp == "Null":
-				return temp
-
-	return "Null"
-
-
+	return compare_lists(left, right)
 
 
 def compare_sides(left, right):
 	left = format_input(left)
 	right = format_input(right)
 	
-	return compare_lists(left, right)
-	
+	temp = compare_lists(left, right)
+	#print(temp)
+	return temp
 
 left = False
 right = False
@@ -112,7 +118,8 @@ for line in open("data.txt", "r"):
 		if compare_sides(left, right):
 			total_sum += index
 
-		print("Index: " + str(index) + " | Total Sum: " + str(total_sum))
+		print(left, right)
+		print("~~~~~~~~~~Index: " + str(index) + " | Total Sum: " + str(total_sum) + "~~~~~~~~~~~~~~~~~~~")
 		index += 1
 		left = False
 		right = False
