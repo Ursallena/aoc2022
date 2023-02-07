@@ -8,7 +8,7 @@ ord_list = [48, 49, 50, 51, 52, 53, 54, 55, 56, 57]
 # Actually in python there's a really easy way to parse the input...
 # ...perhaps you shoudl EVALuate your options...
 ## I'm committed to making things difficult for myself, so it stays!
-def format_input(line_input):	
+def format_input(line_input):
 	temp = []
 	list_depth = 0
 	long_int = False
@@ -101,27 +101,26 @@ def compare_sides(left, right):
 	#print(temp)
 	return temp
 
-left = False
-right = False
-index = 1
-total_sum = 0
-for line in open("data.txt", "r"):
-
-	if line == "":
-		pass
-	elif not left:
-		left = line.strip()
-	elif not right:
-		right = line.strip()
+if __name__ == "__main__":
+	left = False
+	right = False
+	index = 1
+	total_sum = 0
+	for line in open("data.txt", "r"):
 	
-	if left and right:
-		if compare_sides(left, right):
-			total_sum += index
-
-		print(left, right)
-		print("~~~~~~~~~~Index: " + str(index) + " | Total Sum: " + str(total_sum) + "~~~~~~~~~~~~~~~~~~~")
-		index += 1
-		left = False
-		right = False
-
+		if line == "":
+			pass
+		elif not left:
+			left = line.strip()
+		elif not right:
+			right = line.strip()
 		
+		if left and right:
+			if compare_sides(left, right):
+				total_sum += index
+	
+			print(left, right)
+			print("~~~~~~~~~~Index: " + str(index) + " | Total Sum: " + str(total_sum) + "~~~~~~~~~~~~~~~~~~~")
+			index += 1
+			left = False
+			right = False
